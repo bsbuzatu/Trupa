@@ -3,308 +3,266 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0a0807">
-<title>Trupa — Repertoriu și calendar</title>
+<meta name="theme-color" content="#102E50">
+<title>Trupa</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700;800&family=Alegreya+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
 <style>
   /* ============================================================
-     TEMA: negru, aur, lemn, roșu — cusătură populară + rozetă sculptată
+     Paleta: bleumarin #102E50, galben #F5C45E, portocaliu #E78B48, roșu #BE3D2A
+     galben = acțiune și „aici ești” · portocaliu = repetiție · roșu = concert și „nu pot”
      ============================================================ */
   :root{
     color-scheme:dark;
-    --negru:#0a0807;          /* fundal */
-    --lemn-ars:#1a120c;       /* suprafețe (carduri) */
-    --lemn:#291b11;           /* suprafețe ridicate */
-    --lemn-deschis:#3a2616;   /* butoane secundare, etichete */
-    --muchie:#57391f;         /* margini de lemn */
-    --aur:#d9a441;            /* „unde ești”, titluri */
-    --aur-palid:#ecd08a;
-    --aur-stins:#94702c;
-    --rosu:#b5121b;           /* acțiunea principală, concert, „nu pot” */
-    --rosu-viu:#e0434a;
-    --in:#f0e4cc;             /* text (pânză de in) */
-    --in-stins:#bda98a;
-    --in-sters:#8d7a60;
-    /* culorile membrilor (aceleași nuanțe ca până acum, acordate la temă) */
-    --k:#e6b84a; --a:#5aa2d6; --n:#86b860; --r:#e2604a; --b:#b58ad6;
-    --serif:'Alegreya',Georgia,'Times New Roman',serif;
-    --sans:'Alegreya Sans','Segoe UI',system-ui,sans-serif;
-    /* cusătură în cruciuliță: romburi roșii, cruci de aur */
-    --cusatura:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='21' shape-rendering='crispEdges'%3E%3Cpath fill='%23b5121b' d='M15 0h3v3h-3zM12 3h3v3h-3zM18 3h3v3h-3zM9 6h3v3h-3zM21 6h3v3h-3zM6 9h3v3h-3zM24 9h3v3h-3zM9 12h3v3h-3zM21 12h3v3h-3zM12 15h3v3h-3zM18 15h3v3h-3zM15 18h3v3h-3zM15 9h3v3h-3zM33 0h3v3h-3zM33 18h3v3h-3z'/%3E%3Cpath fill='%23d9a441' d='M15 6h3v3h-3zM12 9h3v3h-3zM18 9h3v3h-3zM15 12h3v3h-3zM33 6h3v3h-3zM33 9h3v3h-3zM33 12h3v3h-3zM30 9h3v3h-3zM0 9h3v3h-3z'/%3E%3C/svg%3E");
-    /* fibră de lemn */
-    --fibra:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='240'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006 .28' numOctaves='3' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .82 0 0 0 0 .56 0 0 0 0 .3 1.1 0 0 0 -.42'/%3E%3C/filter%3E%3Crect width='480' height='240' filter='url(%23f)' opacity='.2'/%3E%3C/svg%3E");
+    --bg:#102E50;
+    --card:#183B63;
+    --card-hi:#21497A;
+    --inset:#0B2341;
+    --line:rgba(255,255,255,.10);
+    --text:#F8F4EA;
+    --muted:#AEBDD0;
+    --faint:#8397B1;
+    --yellow:#F5C45E;
+    --orange:#E78B48;
+    --red:#BE3D2A;
+    --ink:#102E50;                 /* text pe galben / portocaliu */
+    /* membrii: pasteluri, separate de culorile cu sens de mai sus */
+    --k:#F7E3A1; --a:#7FC4F0; --n:#8ED3A0; --r:#F4A7B9; --b:#C4A7F2;
+    --display:'Bricolage Grotesque','Instrument Sans',system-ui,sans-serif;
+    --sans:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --nav-h:68px;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
+  html{scroll-padding-top:env(safe-area-inset-top,0px)}
   body{
-    font-family:var(--sans); font-size:16.5px; line-height:1.45;
-    background:var(--negru); color:var(--in); min-height:100vh;
-    -webkit-font-smoothing:antialiased;
-    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+    font-family:var(--sans);font-size:15.5px;line-height:1.5;
+    background:var(--bg);color:var(--text);min-height:100vh;
+    -webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;
+    padding-top:env(safe-area-inset-top,0px);
   }
-  h1,h2,h3{font-family:var(--serif);font-weight:700;margin:0;line-height:1.15}
+  h1,h2,h3{font-family:var(--display);margin:0;line-height:1.1;letter-spacing:-.01em}
+  h1{font-size:30px;font-weight:800}
+  h2{font-size:19px;font-weight:700}
   p{margin:0}
-  button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;color:inherit}
-  input,select,textarea{font-family:inherit}
-  a{color:var(--aur-palid)}
-  :focus-visible{outline:2px solid var(--aur);outline-offset:2px}
+  button{font:inherit;color:inherit;cursor:pointer;border:none;background:none;padding:0}
+  input,select,textarea{font:inherit;color:inherit}
+  a{color:inherit}
+  svg{display:block;flex:0 0 auto}
+  :focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
 
-  .cusatura{height:21px;background:var(--cusatura) repeat-x center;
-    border-top:1px solid var(--aur-stins);border-bottom:1px solid var(--aur-stins);
-    padding:3px 0;background-clip:content-box;box-sizing:content-box}
-  .rozeta{flex:0 0 auto;color:var(--aur)}
+  /* ---------- piese de bază ---------- */
+  .mark{display:grid;grid-template-rows:5fr 3.5fr 3fr;width:26px;height:26px;border-radius:8px;overflow:hidden;flex:0 0 auto}
+  .mark i:nth-child(1){background:var(--yellow)} .mark i:nth-child(2){background:var(--orange)} .mark i:nth-child(3){background:var(--red)}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em}
 
-  /* ---------- Login ---------- */
-  .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-  .login-card{width:100%;max-width:390px;background:var(--fibra),var(--lemn-ars);border:1px solid var(--muchie);
-    border-radius:12px;overflow:hidden;box-shadow:0 30px 80px -30px #000}
-  .login-body{padding:26px 24px 28px}
-  .login-brand{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-  .login-brand h1{font-size:34px;font-weight:800;color:var(--aur)}
-  .login-sub{color:var(--in-stins);font-size:16px;margin-bottom:18px}
-  label.fld,.fld-label{display:block;font-size:14px;font-weight:700;color:var(--in-stins);margin:14px 0 5px}
-  .control{width:100%;background:#0f0a07;border:1px solid var(--muchie);color:var(--in);
-    border-radius:8px;padding:11px 12px;font-size:16.5px}
-  .control::placeholder{color:var(--in-sters)}
-  .control:focus{outline:none;border-color:var(--aur);box-shadow:0 0 0 3px #d9a44133}
-  textarea.control{resize:vertical;line-height:1.5}
-  .btn{background:var(--rosu);color:#fbf1de;border-radius:8px;padding:12px 16px;font-weight:700;
-    font-size:16.5px;width:100%;margin-top:20px;border:1px solid #d6444b55}
-  .btn:hover{background:#c8161f} .btn:active{transform:translateY(1px)}
-  .btn[disabled]{opacity:.6;cursor:default}
-  .btn.ghost{background:var(--lemn-deschis);border:1px solid var(--muchie);color:var(--in)}
-  .btn.ghost:hover{border-color:var(--aur)}
-  .btn.sm{width:auto;margin:0;padding:9px 14px;font-size:15px}
-  .err{color:#ff9c95;font-size:15px;margin-top:10px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--yellow);color:var(--ink);
+    border-radius:14px;padding:13px 18px;font-weight:700;font-size:15.5px;width:100%;transition:transform .12s,filter .12s}
+  .btn:hover{filter:brightness(1.06)} .btn:active{transform:scale(.985)}
+  .btn[disabled]{opacity:.55;cursor:default}
+  .btn.ghost{background:rgba(255,255,255,.07);color:var(--text)}
+  .btn.ghost:hover{background:rgba(255,255,255,.11);filter:none}
+  .text-btn{color:var(--muted);font-size:14px;font-weight:600;padding:8px 6px;border-radius:8px}
+  .text-btn:hover{color:var(--text)}
+
+  label.fld,.fld-label{display:block;font-size:13.5px;font-weight:600;color:var(--muted);margin:0 0 6px}
+  label.fld small{font-weight:400;color:var(--faint)}
+  .control{width:100%;background:var(--inset);border:1.5px solid transparent;border-radius:12px;
+    padding:12px 13px;font-size:16px;line-height:1.3}
+  .control::placeholder{color:var(--faint)}
+  .control:focus{outline:none;border-color:var(--yellow)}
+  textarea.control{resize:vertical;line-height:1.55}
+  .err{color:#FFB3A3;font-size:14px;margin-top:10px}
   .err:empty{display:none}
+  .hint{font-size:14px;color:var(--muted)}
+  .hint b{color:var(--text);font-weight:600}
 
-  /* ---------- App shell ---------- */
-  .app{max-width:940px;margin:0 auto;padding:0 16px 90px}
-  header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 2px 12px}
-  .top .title{display:flex;align-items:center;gap:11px}
-  .top .title b{display:block;font-family:var(--serif);font-weight:800;font-size:24px;line-height:1;color:var(--aur)}
-  .top .title small{display:block;font-size:13.5px;color:var(--in-stins);margin-top:3px}
-  .who{display:flex;align-items:center;gap:6px}
-  .chip-user{display:flex;align-items:center;gap:7px;background:var(--lemn);border:1px solid var(--muchie);
-    padding:5px 12px 5px 6px;border-radius:999px;font-size:15px;font-weight:700}
-  .link-btn{background:none;color:var(--in-stins);font-size:15px;padding:7px 8px;border-radius:6px;
-    text-decoration:underline;text-decoration-color:var(--muchie);text-underline-offset:3px}
-  .link-btn:hover{color:var(--in);text-decoration-color:var(--aur)}
+  .bulina{width:19px;height:19px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+    font:700 11.5px/1 var(--sans);color:var(--ink);flex:0 0 auto}
+  .bulina.lg{width:26px;height:26px;font-size:14px}
 
-  nav.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;background:var(--fibra),var(--lemn);
-    border:1px solid var(--muchie);border-radius:10px;padding:5px;margin:14px 0 22px;
-    position:sticky;top:calc(8px + env(safe-area-inset-top,0px));z-index:15;box-shadow:0 10px 24px -12px #000}
-  nav.tabs button{background:transparent;color:var(--in-stins);padding:9px 6px;border-radius:7px;
-    font-weight:700;font-size:15.5px;line-height:1.15}
-  nav.tabs button:hover{color:var(--in)}
-  nav.tabs button.active{background:var(--aur);color:#16100a}
+  /* ---------- login ---------- */
+  .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .login-card{width:100%;max-width:360px}
+  .login-card .brand{font-size:34px;gap:14px;margin-bottom:6px}
+  .login-card .mark{width:38px;height:38px;border-radius:11px}
+  .login-sub{color:var(--muted);margin-bottom:26px}
+  .login-card .fld{margin-top:16px}
+  .login-card .btn{margin-top:22px}
+
+  /* ---------- cadru ---------- */
+  .app{max-width:720px;margin:0 auto;padding:0 16px calc(var(--nav-h) + 40px + env(safe-area-inset-bottom,0px))}
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0 8px}
+  .who{display:flex;align-items:center;gap:2px}
+  .chip-user{display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:600}
+
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;
+    padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));
+    background:rgba(11,35,65,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+  nav.tabs button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 4px;border-radius:14px;
+    color:var(--muted);font-size:12.5px;font-weight:600;line-height:1.2}
+  nav.tabs button.active{background:var(--yellow);color:var(--ink)}
 
   section{display:none} section.active{display:block}
+  .page-head{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:18px 0 18px}
+  .tag{font-size:12.5px;font-weight:600;border-radius:999px;padding:3px 10px;background:rgba(255,255,255,.08);color:var(--muted)}
+  .tag.edit{background:var(--yellow);color:var(--ink)}
+  .count{color:var(--faint);font-family:var(--display);font-weight:700;font-size:22px}
 
-  .page-head{margin:0 2px 16px}
-  .page-head h1{font-size:28px;font-weight:800}
-  .page-head p{color:var(--in-stins);margin-top:4px;max-width:62ch}
-  .tag{display:inline-block;font-size:13px;font-weight:700;border-radius:999px;padding:1px 9px;vertical-align:3px;margin-left:8px;
-    font-family:var(--sans);border:1px solid var(--aur-stins);color:var(--aur-palid)}
-  .tag.edit{border-color:var(--rosu-viu);color:#ffc9c3}
+  .block{margin-bottom:34px}
+  .card{background:var(--card);border-radius:20px;padding:18px;margin-bottom:34px}
 
-  .card{background:var(--fibra),var(--lemn-ars);border:1px solid #3b2616;border-radius:10px;
-    padding:18px;margin-bottom:14px;box-shadow:inset 0 1px 0 #ffffff0a}
-  .card h2{font-size:21px;color:var(--aur-palid)}
-  .card > .btn.ghost{max-width:380px}
-  .hint{font-size:15px;color:var(--in-stins);margin-top:4px}
-  .hint b{color:var(--in)}
+  /* ---------- panou: următoarea repetiție ---------- */
+  .hero{background:var(--yellow);color:var(--ink);border-radius:24px;padding:20px 20px 18px;margin-bottom:34px}
+  .hero-top{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13.5px;font-weight:600}
+  .hero-rel{background:var(--ink);color:var(--yellow);border-radius:999px;padding:3px 11px;white-space:nowrap}
+  .hero-date{font-family:var(--display);font-weight:800;font-size:clamp(34px,10.5vw,52px);line-height:1;letter-spacing:-.03em;margin:16px 0 6px}
+  .hero-meta{font-size:16px;font-weight:500}
+  .hero-abs{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:16px;background:var(--ink);color:var(--text);
+    border-radius:16px;padding:7px 13px 7px 9px;font-size:14px;font-weight:500}
+  .hero-abs.ok{background:rgba(16,46,80,.1);color:var(--ink);padding-left:13px}
+  .hero.empty{background:var(--card);color:var(--muted)}
+  .hero.empty .hero-top{color:var(--text)}
+  .hero.empty p{margin:12px 0 16px}
 
-  /* ---------- Buline cu inițială ---------- */
-  .bulina{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
-    font:700 11.5px/1 var(--sans);color:#17100a;flex:0 0 auto;letter-spacing:0}
-  .bulina.lg{width:24px;height:24px;font-size:14px}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:14px 0 16px}
+  .legend .it{display:flex;align-items:center;gap:7px;font-size:14px}
+  .legend.pastile{margin:14px 0 0}
+  .legend.pastile .it{color:var(--muted)}
 
-  /* ---------- Panou: următoarea repetiție ---------- */
-  .hero{border:1px solid var(--aur-stins);border-radius:10px;padding:18px 18px 16px;margin-bottom:14px;
-    background:var(--fibra),linear-gradient(120deg,#3d0b10 0%,#1a120c 62%)}
-  .hero .lbl{font-size:15px;font-weight:700;color:var(--aur-palid)}
-  .hero .big{font-family:var(--serif);font-weight:800;font-size:30px;margin:2px 0 0;line-height:1.1}
-  .hero .meta{color:var(--in-stins);font-size:16px}
-  .hero .none{font-size:17px;color:var(--in-stins);margin-top:4px}
-  .absent{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin-top:10px;font-size:15px;color:var(--in)}
-  .absent.ok{color:#bfe0a6}
-
-  .legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin:12px 0 14px}
-  .legend .it{display:flex;align-items:center;gap:6px;font-size:15px;color:var(--in)}
-  .legend.pastile{margin-top:12px;margin-bottom:0}
-  .legend.pastile .it{color:var(--in-stins)}
-
-  /* ---------- Calendar ---------- */
-  .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-  .cal-head .mlabel{font-family:var(--serif);font-weight:700;font-size:19px;text-transform:capitalize}
-  .nav-mini{background:var(--lemn-deschis);border:1px solid var(--muchie);color:var(--in);
-    width:42px;height:36px;border-radius:8px;font-size:18px}
-  .nav-mini:hover{border-color:var(--aur)}
+  /* ---------- calendar ---------- */
+  .month-nav{display:flex;align-items:center;justify-content:space-between;margin:0 0 6px}
+  .month-nav .mlabel{font-family:var(--display);font-weight:700;font-size:17px}
+  .nav-mini{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--text);background:rgba(255,255,255,.07)}
+  .nav-mini:hover{background:rgba(255,255,255,.13)}
   .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
-  .dow{text-align:center;font-size:13px;color:var(--in-sters);font-weight:700;padding-bottom:1px}
-  .cell{min-height:68px;background:#100b07;border:1px solid #2e1e12;border-radius:6px;
-    padding:5px;display:flex;flex-direction:column;align-items:flex-start;gap:3px;
-    font:inherit;color:inherit;text-align:left;min-width:0}
-  .cell.empty{background:transparent;border:none}
-  .cell.past{opacity:.42}
-  .cell.today{border-color:var(--aur);box-shadow:inset 0 0 0 1px var(--aur)}
-  .cell .dnum{font-size:14px;color:var(--in-stins);font-weight:700;line-height:1}
-  .cell.today .dnum{color:var(--aur)}
-  button.cell{cursor:pointer}
-  button.cell:hover{border-color:var(--aur)}
-  .cell.mine{background:repeating-linear-gradient(135deg,#5c0e14 0 7px,#470a0f 7px 14px);border-color:var(--rosu-viu)}
-  .cell.mine .dnum{color:#ffe1dc}
-  .nupot{margin-top:auto;font-size:12px;font-weight:700;color:#ffe1dc;line-height:1.1}
+  .dow{text-align:center;font-size:12px;color:var(--faint);font-weight:600;padding:4px 0}
+  .cell{min-height:70px;background:rgba(255,255,255,.045);border-radius:12px;padding:6px;
+    display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;min-width:0}
+  .cell.empty{background:transparent}
+  .cell.past{opacity:.38}
+  .cell .dnum{font-size:13px;font-weight:600;color:var(--muted);line-height:1}
+  .cell.today{box-shadow:inset 0 0 0 2px var(--yellow)}
+  .cell.today .dnum{color:var(--yellow)}
+  button.cell{transition:background .12s}
+  button.cell:hover{background:rgba(255,255,255,.1)}
+  .cell.mine,button.cell.mine:hover{background:var(--red)}
+  .cell.mine .dnum{color:#fff}
+  .nupot{margin-top:auto;font-size:11.5px;font-weight:700;color:#fff;line-height:1.1}
   .dots{display:flex;flex-wrap:wrap;gap:2px;margin-top:auto}
-  .evpill{font-size:11.5px;font-weight:700;padding:1px 5px;border-radius:4px;line-height:1.25;max-width:100%;
-    overflow:hidden;white-space:nowrap}
-  .evpill.rep{background:#d9a44126;color:var(--aur-palid);border:1px solid var(--aur-stins)}
-  .evpill.con{background:var(--rosu);color:#fff;border:1px solid var(--rosu-viu)}
+  .evpill{font-size:10.5px;font-weight:700;padding:2px 5px;border-radius:5px;line-height:1.15;white-space:nowrap}
+  .evpill.rep{background:var(--orange);color:var(--ink)}
+  .evpill.con{background:var(--red);color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.35)}
 
-  /* ---------- Evenimente ---------- */
-  .events-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
-  .ev{display:flex;align-items:center;gap:12px;background:#100b07;border:1px solid #2e1e12;
-    border-radius:8px;padding:10px 12px}
-  .ev .date{font-family:var(--serif);font-weight:800;text-align:center;line-height:1;min-width:42px}
-  .ev .date .d{font-size:22px} .ev .date .m{font-size:12px;font-family:var(--sans);font-weight:700;color:var(--in-stins);margin-top:2px}
-  .ev.rep .date .d{color:var(--aur)} .ev.con .date .d{color:var(--rosu-viu)}
+  /* ---------- evenimente ---------- */
+  .events-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+  .ev{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:16px;padding:12px 14px;position:relative;overflow:hidden}
+  .ev::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--orange)}
+  .ev.con::before{background:var(--red)}
+  .ev .date{text-align:center;min-width:40px;margin-left:4px}
+  .ev .date .d{font-family:var(--display);font-weight:800;font-size:24px;line-height:1}
+  .ev .date .m{font-size:12px;font-weight:600;color:var(--muted)}
   .ev .info{flex:1;min-width:0}
-  .ev .info .t{font-weight:700;font-size:16px}
-  .ev .info .s{font-size:14.5px;color:var(--in-stins)}
-  .ev .absent{margin-top:5px;font-size:14px}
-  .empty-state{color:var(--in-stins);text-align:center;padding:22px 10px}
-  .del{background:none;color:var(--in-sters);font-size:14px;padding:6px 8px;border-radius:6px}
-  .del:hover{color:#ff9c95}
-  .warn{background:#3a0c10;border:1px solid #7c1c23;color:#ffd9d4;border-radius:8px;padding:9px 12px;font-size:15px;
-    display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+  .ev .info .t{font-weight:600}
+  .ev .info .s{font-size:14px;color:var(--muted)}
+  .ev .lipsa{display:flex;flex-wrap:wrap;gap:3px;justify-content:flex-end;max-width:66px}
+  .empty-state{color:var(--muted);text-align:center;padding:28px 10px}
+  .warn{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--red);color:#fff;border-radius:12px;
+    padding:10px 13px;font-size:14px;font-weight:500;margin-top:12px}
   .warn:empty{display:none}
 
-  .repertoriu-sum{margin:8px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px}
-  .repertoriu-sum b{font-family:var(--serif);font-size:19px;color:var(--aur)}
+  /* ---------- formulare ---------- */
+  .form{display:flex;flex-direction:column;gap:14px;margin-top:14px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .row-bpm{display:grid;grid-template-columns:104px 1fr;gap:12px}
+  .seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--inset);border-radius:12px;padding:4px}
+  .seg label{position:relative;text-align:center;padding:9px 6px;border-radius:9px;font-weight:600;font-size:15px;color:var(--muted);cursor:pointer}
+  .seg input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+  .seg label:has(input:checked){background:var(--card-hi);color:var(--text)}
+  .seg label:has(input:focus-visible){outline:2px solid var(--yellow);outline-offset:2px}
 
-  /* ---------- Piese ---------- */
-  .toolbar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-  .toolbar .btn{margin:0;width:auto;flex:1 1 140px}
-  .addrow{display:flex;flex-direction:column;gap:10px}
-  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .row-bpm{display:grid;grid-template-columns:110px 1fr;gap:10px}
-  .row2 .fld,.row-bpm .fld,.row2 .fld-label{margin-top:0}
+  /* ---------- piese ---------- */
+  .toolbar{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:22px}
+  .toolbar .btn.ghost{width:auto}
+  .songs{display:flex;flex-direction:column;gap:10px}
+  .song{background:var(--card);border-radius:20px;padding:18px 18px 10px}
+  .song-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .song h3{font-size:21px;font-weight:700;overflow-wrap:anywhere}
+  .song .artist{color:var(--muted);margin-top:3px}
+  .bpm{flex:0 0 auto;font-size:13px;font-weight:700;border-radius:999px;padding:4px 10px;background:rgba(255,255,255,.08);white-space:nowrap}
+  .structura{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px}
+  .parte{font-size:13px;font-weight:600;padding:4px 9px;border-radius:8px;background:rgba(255,255,255,.08);color:var(--text);white-space:nowrap}
+  .parte.refren{background:var(--yellow);color:var(--ink)}
+  .parte.solo{background:transparent;box-shadow:inset 0 0 0 1.5px var(--orange);color:var(--orange)}
+  .song-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
+  .song-actions .spatiu{flex:1}
+  .chip-btn{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600;
+    background:rgba(255,255,255,.08);text-decoration:none}
+  .chip-btn:hover{background:rgba(255,255,255,.13)}
+  .chip-btn.gol{background:transparent;box-shadow:inset 0 0 0 1.5px var(--line);color:var(--muted)}
+  .song.arhivata{background:transparent;box-shadow:inset 0 0 0 1.5px var(--line)}
+  .arh-info{font-size:13.5px;color:var(--faint);margin-top:10px}
+  .arh-row{display:flex;flex-wrap:wrap;align-items:center;gap:2px 10px;border-top:1px solid var(--line);padding-top:10px}
+  .arh-row .text-btn{color:#FFB3A3;padding-left:0}
 
-  .song{padding:16px}
-  .song-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-  .song-title{font-size:23px;font-weight:800;color:var(--in);overflow-wrap:anywhere}
-  .song-artist{color:var(--in-stins);font-size:16px;margin-top:1px}
-  .song-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:7px;font-size:14px;color:var(--in-sters)}
-  .bpm{font-weight:700;color:var(--aur-palid);border:1px solid var(--aur-stins);border-radius:5px;padding:0 7px;font-size:14px}
-  .tally{display:flex;gap:5px;flex:0 0 auto}
-  .tchip{font-size:14px;font-weight:700;background:#100b07;border:1px solid #2e1e12;
-    border-radius:6px;padding:3px 8px;white-space:nowrap}
-  .media{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:13px 0 0}
-  .pill-link{display:inline-flex;align-items:center;gap:6px;background:var(--lemn-deschis);
-    border:1px solid var(--muchie);color:var(--in);border-radius:7px;padding:7px 12px;
-    font-size:15px;font-weight:700;text-decoration:none}
-  .pill-link:hover{border-color:var(--aur)}
-  .pill-link.gol{background:transparent;border-style:dashed;color:var(--in-stins);font-weight:500}
-  .structura{display:flex;flex-wrap:wrap;gap:5px 3px;align-items:center;margin-top:13px}
-  .parte{font-size:14px;font-weight:500;padding:2px 10px;border-radius:999px;background:var(--lemn-deschis);
-    border:1px solid var(--muchie);color:var(--in);white-space:nowrap}
-  .parte.refren{background:var(--rosu);border-color:var(--rosu-viu);color:#fff;font-weight:700}
-  .parte.solo{background:transparent;border-color:var(--aur);color:var(--aur-palid)}
-  .pas{display:inline-flex;align-items:center;gap:3px}
-  .sag{color:var(--in-sters);font-size:13px}
-  .ctrls{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:15px;
-    padding-top:14px;border-top:1px solid #3b2616}
-  .ctrl label{display:block;font-size:13.5px;color:var(--in-stins);margin-bottom:4px;font-weight:700}
-  .ctrl select{width:100%;background:#0f0a07;border:1px solid var(--muchie);color:var(--in);
-    border-radius:7px;padding:8px 6px;font-size:15px;font-weight:500}
-  .ctrl select:focus{outline:none;border-color:var(--aur)}
-  .ctrl.band label{color:var(--aur-palid)}
-  details.band{margin-top:13px}
-  details.band summary{cursor:pointer;font-size:14.5px;color:var(--in-stins);list-style:none;
-    display:flex;align-items:center;gap:6px}
-  details.band summary::-webkit-details-marker{display:none}
-  details.band summary::before{content:"▸";color:var(--aur)}
-  details.band[open] summary::before{content:"▾"}
-  .roster{margin-top:8px;display:flex;flex-direction:column;gap:5px}
-  .rrow,.roster-head{display:grid;grid-template-columns:1.4fr .8fr .8fr .8fr;gap:8px;align-items:center}
-  .rrow{font-size:15px;background:#100b07;border-radius:6px;padding:6px 9px}
-  .rrow .nm{display:flex;align-items:center;gap:7px;font-weight:700}
-  .rrow .st{color:var(--in-sters);text-align:center}
-  .rrow .st.yes,.rrow .st.up{color:#a8d688;font-weight:700}
-  .rrow .st.down{color:#ff9c95;font-weight:700}
-  .roster-head{font-size:13px;color:var(--in-sters);padding:0 9px;margin-top:10px;font-weight:700}
-  .roster-head span{text-align:center} .roster-head span:first-child{text-align:left}
-  .song-foot{display:flex;gap:4px;margin:10px -8px -6px;flex-wrap:wrap}
-  .song.arhivata{background:#110c08;border-style:dashed}
-  .song.arhivata .song-title{color:var(--in-stins)}
-  .arh-info{font-size:14px;color:var(--in-sters)}
-
-  /* ---------- Ferestre (piesă, versuri) ---------- */
-  dialog.sheet{border:1px solid var(--muchie);border-radius:12px;background:var(--fibra),var(--lemn-ars);
-    color:var(--in);padding:0;width:min(640px,calc(100vw - 16px));max-height:calc(100dvh - 20px);
-    box-shadow:0 30px 90px #000;overflow:hidden}
+  /* ---------- ferestre ---------- */
+  dialog.sheet{border:none;border-radius:24px;background:var(--card);color:var(--text);padding:0;
+    width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 32px);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
   dialog.sheet[open]{display:flex;flex-direction:column}
-  dialog.sheet::backdrop{background:#000c}
-  .sheet-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px 10px}
-  .sheet-head h2{font-size:23px;color:var(--aur);overflow-wrap:anywhere}
-  .sheet-x{background:var(--lemn-deschis);border:1px solid var(--muchie);width:36px;height:36px;border-radius:8px;font-size:18px;flex:0 0 auto}
-  .sheet-body{padding:14px 16px 18px;overflow-y:auto;flex:1 1 auto}
-  .sheet-foot{display:flex;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));
-    border-top:1px solid #3b2616;background:#120c08}
-  .sheet-foot .btn{margin:0}
-  .sheet-foot .btn.ghost{flex:0 0 auto;width:auto}
+  dialog.sheet::backdrop{background:rgba(6,18,34,.72)}
+  .sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 20px 6px}
+  .sheet-head h2{font-size:22px;overflow-wrap:anywhere}
+  .sheet-x{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);flex:0 0 auto}
+  .sheet-x:hover{background:rgba(255,255,255,.14)}
+  .sheet-body{padding:14px 20px 20px;overflow-y:auto;flex:1 1 auto;display:flex;flex-direction:column;gap:14px}
+  .sheet-foot{display:grid;grid-template-columns:auto 1fr;gap:10px;padding:12px 20px calc(16px + env(safe-area-inset-bottom,0px))}
+  .sheet-foot .btn.ghost{width:auto}
 
-  .seq-box{background:#0f0a07;border:1px solid var(--muchie);border-radius:8px;padding:10px}
-  .seq{display:flex;flex-wrap:wrap;gap:6px;min-height:34px;align-items:center}
-  .seq .gol{color:var(--in-sters);font-size:15px}
-  .seq button.parte{font-size:15px;padding:4px 11px;cursor:pointer}
-  .seq button.parte .nr{color:var(--in-sters);font-size:12.5px;margin-right:5px;font-weight:700}
-  .seq button.parte.refren .nr{color:#ffd0cb}
-  .seq button.parte.sel{outline:2px solid var(--aur);outline-offset:2px}
-  .seq-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid #2e1e12}
-  .seq-tools button{background:var(--lemn-deschis);border:1px solid var(--muchie);border-radius:7px;
-    padding:6px 11px;font-size:14.5px;font-weight:700}
-  .seq-tools button[disabled]{opacity:.4;cursor:default}
+  .seq{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--inset);border-radius:12px;padding:10px;min-height:54px}
+  .seq .gol{color:var(--faint);font-size:14px;padding:0 4px}
+  .seq button.parte{font-size:14px;padding:7px 11px}
+  .seq button.parte.sel{outline:2px solid var(--text);outline-offset:2px}
+  .seq-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .seq-tools button{border-radius:999px;padding:6px 12px;font-size:13.5px;font-weight:600;background:rgba(255,255,255,.08)}
+  .seq-tools button[disabled]{opacity:.35;cursor:default}
   .seq-tools .spatiu{flex:1}
-  .paleta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-  .paleta button{background:var(--lemn-deschis);border:1px solid var(--muchie);border-radius:999px;
-    padding:6px 12px;font-size:15px;font-weight:500}
-  .paleta button:hover{border-color:var(--aur)}
-  .paleta button::before{content:"+ ";color:var(--aur);font-weight:700}
-  .row-inline{display:flex;gap:8px;margin-top:10px}
-  .row-inline .control{flex:1;min-width:0}
+  .paleta{display:flex;flex-wrap:wrap;gap:6px}
+  .paleta button{border-radius:999px;padding:7px 12px;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1.5px var(--line)}
+  .paleta button:hover{background:rgba(255,255,255,.08)}
+  .paleta button::before{content:"+ ";color:var(--yellow)}
+  .row-inline{display:grid;grid-template-columns:1fr auto;gap:8px}
+  .row-inline .btn{width:auto;padding:0 16px}
 
-  .lyrics-view{font-family:var(--serif);font-size:19px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
-  .lyrics-meta{font-size:14px;color:var(--in-sters);margin-top:14px}
-  #lyricsText{min-height:46vh;font-size:17px}
+  .lyrics-view{font-size:17.5px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+  .lyrics-meta{font-size:13px;color:var(--faint)}
+  #lyricsText{min-height:46vh}
 
-  .toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);
-    background:#000;color:var(--in);border:1px solid var(--aur-stins);padding:10px 16px;border-radius:8px;
-    font-size:15.5px;opacity:0;pointer-events:none;transition:.25s;z-index:100;max-width:90vw;text-align:center}
+  .toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 22px + env(safe-area-inset-bottom,0px));
+    transform:translateX(-50%) translateY(12px);background:var(--text);color:var(--ink);padding:10px 16px;border-radius:999px;
+    font-size:14.5px;font-weight:600;opacity:0;pointer-events:none;transition:.22s;z-index:100;max-width:calc(100vw - 32px);text-align:center}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-  .config-warn{background:#3a0c10;border:1px solid #7c1c23;color:#ffd9d4;border-radius:10px;
-    padding:16px;margin:18px auto;max-width:560px;font-size:16px;line-height:1.5}
-  .config-warn code{background:#0006;padding:2px 6px;border-radius:5px;font-size:14px}
+  .config-warn{background:var(--red);color:#fff;border-radius:16px;padding:18px;margin:24px auto;max-width:560px;line-height:1.5}
+  .config-warn code{background:rgba(0,0,0,.25);padding:2px 6px;border-radius:6px;font-size:13.5px}
 
-  @media (max-width:560px){
-    .app{padding:0 12px 90px}
-    .card{padding:14px 12px}
-    .ctrls{grid-template-columns:repeat(2,1fr)}
-    .row2{grid-template-columns:1fr}
+  /* ---------- ecrane mici: ferestrele urcă de jos ---------- */
+  @media (max-width:639px){
+    dialog.sheet{margin:auto 0 0;width:100%;max-width:100%;border-radius:24px 24px 0 0;max-height:calc(100dvh - 28px - env(safe-area-inset-top,0px))}
+    .cell{min-height:62px;padding:5px 4px}
     .grid{gap:4px}
-    .cell{min-height:60px;padding:3px}
-    .bulina{width:15px;height:15px;font-size:10.5px}
-    .bulina.lg{width:24px;height:24px;font-size:14px}
-    .evpill{font-size:10.5px;padding:1px 3px}
-    .nupot{font-size:11px}
-    .hero .big{font-size:25px}
-    .page-head h1{font-size:25px}
-    nav.tabs button{font-size:14.5px}
-    .chip-user{font-size:14px}
+    .bulina{width:16px;height:16px;font-size:10.5px}
+    .bulina.lg{width:26px;height:26px;font-size:14px}
+    .row2{grid-template-columns:1fr}
+  }
+  /* ---------- ecrane mari: taburile stau sus ---------- */
+  @media (min-width:640px){
+    .app{padding-bottom:60px}
+    nav.tabs{position:sticky;top:12px;bottom:auto;display:inline-grid;grid-auto-flow:column;grid-template-columns:none;
+      border:none;border-radius:18px;padding:5px;background:rgba(11,35,65,.9);margin:6px 0 4px}
+    nav.tabs button{flex-direction:row;gap:8px;padding:9px 16px;font-size:14.5px;border-radius:13px}
+    .toast{bottom:28px}
+    h1{font-size:34px}
   }
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -314,146 +272,124 @@
 <!-- LOGIN -->
 <div id="loginView" class="login-wrap" style="display:none">
   <div class="login-card">
-    <div class="cusatura" aria-hidden="true" style="border-top:none"></div>
-    <div class="login-body">
-      <div class="login-brand">
-        <svg class="rozeta" width="46" height="46" viewBox="-24 -24 48 48" aria-hidden="true"><circle r="22.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path fill="currentColor" fill-opacity=".85" d="M0 0A20 20 0 0 1 0 -20A20 20 0 0 1 0 0ZM0 0A20 20 0 0 1 17.32 -10A20 20 0 0 1 0 0ZM0 0A20 20 0 0 1 17.32 10A20 20 0 0 1 0 0ZM0 0A20 20 0 0 1 0 20A20 20 0 0 1 0 0ZM0 0A20 20 0 0 1 -17.32 10A20 20 0 0 1 0 0ZM0 0A20 20 0 0 1 -17.32 -10A20 20 0 0 1 0 0Z"/></svg>
-        <h1>Trupa</h1>
-      </div>
-      <p class="login-sub">Intră cu numele tău ca să votezi piese și să treci zilele în care nu poți veni.</p>
-      <label class="fld" for="userSel">Cine ești</label>
-      <select id="userSel" class="control"></select>
-      <label class="fld" for="passInp">Parolă</label>
-      <input id="passInp" class="control" type="password" placeholder="••••" autocomplete="off">
-      <button id="loginBtn" class="btn">Intră</button>
-      <div id="loginErr" class="err" role="alert"></div>
-    </div>
+    <div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>Trupa</div>
+    <p class="login-sub">Alege-ți numele și scrie parola.</p>
+    <label class="fld" for="userSel">Cine ești</label>
+    <select id="userSel" class="control"></select>
+    <label class="fld" for="passInp">Parolă</label>
+    <input id="passInp" class="control" type="password" autocomplete="off">
+    <button id="loginBtn" class="btn">Intră</button>
+    <div id="loginErr" class="err" role="alert"></div>
   </div>
 </div>
 
 <!-- APP -->
 <div id="appView" class="app" style="display:none">
   <header class="top">
-    <div class="title">
-      <svg class="rozeta" width="38" height="38" viewBox="-24 -24 48 48" aria-hidden="true"><circle r="22.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path fill="currentColor" fill-opacity=".85" d="M0 0A20 20 0 0 1 0 -20A20 20 0 0 1 0 0ZM0 0A20 20 0 0 1 17.32 -10A20 20 0 0 1 0 0ZM0 0A20 20 0 0 1 17.32 10A20 20 0 0 1 0 0ZM0 0A20 20 0 0 1 0 20A20 20 0 0 1 0 0ZM0 0A20 20 0 0 1 -17.32 10A20 20 0 0 1 0 0ZM0 0A20 20 0 0 1 -17.32 -10A20 20 0 0 1 0 0Z"/></svg>
-      <div><b>Trupa</b><small>Repertoriu și calendar</small></div>
-    </div>
+    <div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>Trupa</div>
     <div class="who">
       <span class="chip-user"><span class="bulina lg" id="meDot"></span><span id="meName">—</span></span>
-      <button class="link-btn" id="logoutBtn">Ieși</button>
+      <button class="text-btn" id="logoutBtn" style="margin-left:6px">Ieși</button>
     </div>
   </header>
-  <div class="cusatura" aria-hidden="true"></div>
 
   <nav class="tabs" aria-label="Secțiuni">
-    <button data-view="home" class="active">Panou trupă</button>
-    <button data-view="songs">Piese</button>
-    <button data-view="cal">Calendarul tău</button>
+    <button data-view="home" class="active">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>
+      Panou trupă</button>
+    <button data-view="songs">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+      Piese</button>
+    <button data-view="cal">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+      Calendarul tău</button>
   </nav>
 
-  <!-- PANOU TRUPĂ (dashboard, doar de citit) -->
+  <!-- PANOU TRUPĂ (doar de citit) -->
   <section id="view-home" class="active">
-    <div class="page-head">
-      <h1>Panoul trupei <span class="tag">doar de citit</span></h1>
-      <p>Aici se adună ce a trecut fiecare în <b>Calendarul tău</b> și ce s-a programat. Nu modifici nimic de aici.</p>
-    </div>
+    <div class="page-head"><h1>Panou trupă</h1><span class="tag">doar de citit</span></div>
 
-    <div class="hero">
-      <div class="lbl">Următoarea repetiție</div>
-      <div id="nextRehearsal"></div>
-    </div>
+    <div id="nextRehearsal"></div>
 
-    <div class="card">
+    <div class="block">
       <h2>Cine nu poate veni</h2>
-      <p class="hint">O bulină = omul acela <b>nu poate</b> în ziua respectivă. Zi fără buline = nimeni n-a anunțat că lipsește.</p>
+      <p class="hint" style="margin-top:6px">O bulină înseamnă că omul acela <b>nu poate</b> în ziua respectivă.</p>
       <div class="legend" id="legendHome"></div>
-      <div class="cal-head">
-        <button class="nav-mini" id="homePrev" aria-label="Luna anterioară">‹</button>
-        <div class="mlabel" id="homeMonth"></div>
-        <button class="nav-mini" id="homeNext" aria-label="Luna următoare">›</button>
+      <div class="month-nav">
+        <button class="nav-mini" id="homePrev" aria-label="Luna anterioară"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <span class="mlabel" id="homeMonth"></span>
+        <button class="nav-mini" id="homeNext" aria-label="Luna următoare"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>
       <div class="grid" id="homeGrid"></div>
       <div class="legend pastile">
         <span class="it"><span class="evpill rep">Rep</span> repetiție</span>
         <span class="it"><span class="evpill con">Conc</span> concert</span>
       </div>
-      <button class="btn ghost" data-goto="cal" style="margin-top:14px">Trece-ți zilele în Calendarul tău</button>
     </div>
 
-    <div class="card">
+    <div class="block">
       <h2>Ce urmează</h2>
       <div class="events-list" id="homeEvents"></div>
     </div>
 
-    <div class="card">
-      <h2>Repertoriu</h2>
-      <ul class="repertoriu-sum" id="homeSongs"></ul>
-      <button class="btn ghost" data-goto="songs" style="margin-top:14px">Deschide Piese</button>
-    </div>
+    <button class="btn ghost" data-goto="cal">Trece-ți zilele în Calendarul tău</button>
   </section>
 
   <!-- PIESE -->
   <section id="view-songs">
-    <div class="page-head">
-      <h1 id="songsHead">Piese</h1>
-      <p id="songsSub"></p>
-    </div>
+    <div class="page-head"><h1 id="songsHead">Piese</h1><span class="count" id="songsCount"></span></div>
     <div class="toolbar">
       <button class="btn" id="openAddSong">Adaugă o piesă</button>
       <button class="btn ghost" id="archToggle">Arhivă</button>
     </div>
-    <div id="songsList"></div>
+    <div id="songsList" class="songs"></div>
   </section>
 
   <!-- CALENDARUL TĂU -->
   <section id="view-cal">
-    <div class="page-head">
-      <h1>Calendarul tău <span class="tag edit">aici modifici</span></h1>
-      <p>Treci zilele în care <b>nu poți</b> veni. Trupa le vede în Panou trupă.</p>
-    </div>
-    <div class="card">
+    <div class="page-head"><h1>Calendarul tău</h1><span class="tag edit">aici modifici</span></div>
+
+    <div class="block">
       <h2>Zilele în care nu poți</h2>
-      <p class="hint">Apasă pe o zi ca s-o marchezi <b>„nu pot”</b>. Apasă din nou ca s-o eliberezi. Aici apar doar zilele tale.</p>
-      <div class="cal-head" style="margin-top:12px">
-        <button class="nav-mini" id="calPrev" aria-label="Luna anterioară">‹</button>
-        <div class="mlabel" id="calMonth"></div>
-        <button class="nav-mini" id="calNext" aria-label="Luna următoare">›</button>
+      <p class="hint" style="margin:6px 0 14px">Apasă pe o zi ca s-o marchezi <b>„nu pot”</b>. Apasă din nou ca s-o eliberezi.</p>
+      <div class="month-nav">
+        <button class="nav-mini" id="calPrev" aria-label="Luna anterioară"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <span class="mlabel" id="calMonth"></span>
+        <button class="nav-mini" id="calNext" aria-label="Luna următoare"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>
       <div class="grid" id="calGrid"></div>
       <p class="hint" id="calCount" style="margin-top:12px"></p>
     </div>
 
     <div class="card">
-      <h2>Programează o repetiție sau un concert</h2>
-      <p class="hint">Apare la toată trupa, în Panou trupă.</p>
-      <div class="addrow" style="margin-top:14px">
-        <div class="row2">
-          <div>
-            <label class="fld" for="evType">Tip</label>
-            <select id="evType" class="control">
-              <option value="repetitie">Repetiție</option>
-              <option value="concert">Concert</option>
-            </select>
-          </div>
-          <div>
-            <label class="fld" for="evDate">Data</label>
-            <input id="evDate" class="control" type="date">
-          </div>
+      <h2>Programează</h2>
+      <div class="form">
+        <div class="seg" role="radiogroup" aria-label="Tip">
+          <label><input type="radio" name="evType" value="repetitie" checked>Repetiție</label>
+          <label><input type="radio" name="evType" value="concert">Concert</label>
         </div>
-        <div class="warn" id="evWarn" role="status"></div>
+        <div>
+          <label class="fld" for="evDate">Data</label>
+          <input id="evDate" class="control" type="date">
+          <div class="warn" id="evWarn" role="status"></div>
+        </div>
         <div class="row2">
           <div>
-            <label class="fld" for="evTime">Ora (opțional)</label>
+            <label class="fld" for="evTime">Ora <small>(opțional)</small></label>
             <input id="evTime" class="control" type="time">
           </div>
           <div>
-            <label class="fld" for="evTitle">Loc sau detalii (opțional)</label>
-            <input id="evTitle" class="control" placeholder="ex: la Nicu / Club X">
+            <label class="fld" for="evTitle">Loc <small>(opțional)</small></label>
+            <input id="evTitle" class="control" placeholder="la Nicu, Club X…">
           </div>
         </div>
-        <button class="btn" id="addEvBtn" style="margin-top:6px">Adaugă în calendar</button>
+        <button class="btn" id="addEvBtn">Adaugă în calendar</button>
         <div class="err" id="evErr" role="alert"></div>
       </div>
+    </div>
+
+    <div class="block" id="calEventsBlock">
+      <h2>Programate</h2>
       <div class="events-list" id="calEvents"></div>
     </div>
   </section>
@@ -463,33 +399,29 @@
 <dialog class="sheet" id="songDlg" aria-labelledby="songDlgTitle">
   <div class="sheet-head">
     <h2 id="songDlgTitle">Adaugă o piesă</h2>
-    <button class="sheet-x" data-close aria-label="Închide">✕</button>
+    <button class="sheet-x" data-close aria-label="Închide"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </div>
   <div class="sheet-body">
-    <div class="row2">
-      <div>
-        <label class="fld" for="sTitle">Piesă</label>
-        <input id="sTitle" class="control" placeholder="ex: Valerie">
-      </div>
-      <div>
-        <label class="fld" for="sArtist">Artist</label>
-        <input id="sArtist" class="control" placeholder="ex: Amy Winehouse">
-      </div>
+    <div>
+      <label class="fld" for="sTitle">Piesă</label>
+      <input id="sTitle" class="control" placeholder="Valerie">
     </div>
-    <div class="row-bpm" style="margin-top:14px">
+    <div>
+      <label class="fld" for="sArtist">Artist <small>(opțional)</small></label>
+      <input id="sArtist" class="control" placeholder="Amy Winehouse">
+    </div>
+    <div class="row-bpm">
       <div>
         <label class="fld" for="sBpm">BPM</label>
-        <input id="sBpm" class="control" type="number" inputmode="numeric" min="30" max="300" placeholder="ex: 96">
+        <input id="sBpm" class="control" type="number" inputmode="numeric" min="30" max="300" placeholder="96">
       </div>
       <div>
-        <label class="fld" for="sLink">Link spre audio</label>
+        <label class="fld" for="sLink">Link audio</label>
         <input id="sLink" class="control" type="url" inputmode="url" placeholder="YouTube, Spotify, Drive…">
       </div>
     </div>
-
-    <div class="fld-label" style="margin-top:18px">Structură</div>
-    <p class="hint" style="margin:0 0 8px">Apasă pe părți în ordinea în care apar în piesă. Aceeași parte poate apărea de mai multe ori.</p>
-    <div class="seq-box">
+    <div>
+      <div class="fld-label">Structură</div>
       <div class="seq" id="partSeq"></div>
       <div class="seq-tools">
         <button type="button" id="seqLeft">‹ Mută</button>
@@ -499,12 +431,19 @@
         <button type="button" id="seqClear">Golește</button>
       </div>
     </div>
-    <div class="paleta" id="partPalette"></div>
+    <div>
+      <div class="fld-label">Apasă părțile în ordinea din piesă</div>
+      <div class="paleta" id="partPalette"></div>
+    </div>
     <div class="row-inline">
-      <input id="partCustom" class="control" placeholder="Altă parte (ex: Modulație)" maxlength="40" aria-label="Altă parte">
-      <button type="button" class="btn sm ghost" id="partCustomAdd">Adaugă partea</button>
+      <input id="partCustom" class="control" placeholder="Altă parte…" maxlength="40" aria-label="Altă parte">
+      <button type="button" class="btn ghost" id="partCustomAdd">Adaugă</button>
     </div>
     <div class="err" id="songErr" role="alert"></div>
+    <div class="arh-row" id="archRow">
+      <button type="button" class="text-btn" id="archFromDlg">Arhivează piesa</button>
+      <span class="hint">Nu se șterge. O găsești în Arhivă.</span>
+    </div>
   </div>
   <div class="sheet-foot">
     <button class="btn ghost" data-close>Renunță</button>
@@ -516,15 +455,15 @@
 <dialog class="sheet" id="lyricsDlg" aria-labelledby="lyricsTitle">
   <div class="sheet-head">
     <h2 id="lyricsTitle">Versuri</h2>
-    <button class="sheet-x" data-close aria-label="Închide">✕</button>
+    <button class="sheet-x" data-close aria-label="Închide"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </div>
   <div class="sheet-body">
     <div id="lyricsViewBox">
       <div class="lyrics-view" id="lyricsView"></div>
-      <div class="lyrics-meta" id="lyricsMeta"></div>
+      <div class="lyrics-meta" id="lyricsMeta" style="margin-top:14px"></div>
     </div>
     <div id="lyricsEditBox">
-      <textarea id="lyricsText" class="control" placeholder="Lipește sau scrie versurile aici. Poți marca părțile: [Strofa 1], [Refren]…" aria-label="Versuri"></textarea>
+      <textarea id="lyricsText" class="control" placeholder="Lipește sau scrie versurile aici." aria-label="Versuri"></textarea>
     </div>
   </div>
   <div class="sheet-foot" id="lyricsFootView">
@@ -587,8 +526,10 @@ const PARTS = ["Intro","Strofă","Pre-refren","Refren","Bridge","Instrumental","
 const MONTHS = ["ianuarie","februarie","martie","aprilie","mai","iunie",
   "iulie","august","septembrie","octombrie","noiembrie","decembrie"];
 const MONTHS_SHORT = ["ian","feb","mar","apr","mai","iun","iul","aug","sep","oct","nov","dec"];
-const DOW = ["Lun","Mar","Mie","Joi","Vin","Sâm","Dum"];
+const DOW = ["L","Ma","Mi","J","V","S","D"];
 const WEEKDAYS = ["duminică","luni","marți","miercuri","joi","vineri","sâmbătă"];
+
+const ICON_PLAY = `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg>`;
 
 /* ---------- init Firebase ---------- */
 const configOk = !Object.values(firebaseConfig).some(v => !v || v === "PUNE_AICI");
@@ -607,9 +548,8 @@ let songs = [], events = [], availability = {};
 let seedTried = false;
 let homeMonth = startOfMonth(new Date());
 let calMonth  = startOfMonth(new Date());
-let showArchive = false;            // tab Piese: repertoriu sau arhivă
-const openBand = new Set();         // ce carduri au lista trupei deschisă
-let editId = null, draft = [], selIdx = -1;   // fereastra de piesă
+let showArchive = false;                       // tab Piese: repertoriu sau arhivă
+let editId = null, draft = [], selIdx = -1;    // fereastra de piesă
 let lyricsId = null;                           // fereastra de versuri
 
 /* ---------- helpers ---------- */
@@ -627,7 +567,7 @@ function bulina(u, title, cls){
   return `<span class="bulina ${cls||""}" style="background:${memberColor(u)}" title="${esc(title||MEMBERS[u].name)}">${initial(u)}</span>`;
 }
 function absentOn(ds){ return ORDER.filter(u=>(availability[u]||[]).includes(ds)); }
-/* „1 piesă”, „6 piese”, „20 de piese” */
+/* „1 zi”, „6 zile”, „20 de zile” */
 function cate(n, one, many){ const r=n%100; return `${n} ${n>=20&&(r===0||r>=20)?"de ":""}${n===1?one:many}`; }
 function relDay(ds){
   const diff=Math.round((parseYmd(ds)-parseYmd(todayYmd()))/864e5);
@@ -646,12 +586,6 @@ function partClass(p){
   if(k.startsWith("refren")) return "refren";
   if(/^(solo|instrumental|battle)/.test(k)) return "solo";
   return "";
-}
-function absentHtml(ds){
-  const ab=absentOn(ds);
-  return ab.length
-    ? `<div class="absent">Nu pot veni: ${ab.map(u=>bulina(u)).join("")} <span>${ab.map(firstName).join(", ")}</span></div>`
-    : `<div class="absent ok">Nimeni n-a anunțat că lipsește.</div>`;
 }
 
 /* ============================================================
@@ -707,9 +641,7 @@ function subscribeAll(){
   onSnapshot(query(collection(db,"songs"), orderBy("createdAt","asc")), snap=>{
     songs = snap.docs.map(d=>({id:d.id, ...d.data()}));
     if (!snap.size && !seedTried){ seedTried = true; seedSongs(); }
-    if (!me) return;
-    if (currentView()==="songs") renderSongs();
-    if (currentView()==="home") renderHome();
+    if (me && currentView()==="songs") renderSongs();
   }, err=>console.warn("songs:",err));
 
   onSnapshot(collection(db,"events"), snap=>{
@@ -735,7 +667,6 @@ async function seedSongs(){
     for (const s of SEED){
       await setDoc(doc(db,"songs",s.id), {
         title:s.title, artist:s.artist, link:"", bpm:null, structure:[], lyrics:"", archived:false,
-        tracks:"Nu", votes:{}, studied:{}, canPlay:{},
         addedBy:"(start)", createdAt: Date.now()+i
       });
       i++;
@@ -766,11 +697,22 @@ function renderHome(){
   const box = $("#nextRehearsal");
   if (next){
     const d = parseYmd(next.date);
-    const when = `${WEEKDAYS[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]}` + (next.time?`, ora ${next.time}`:"");
-    box.innerHTML = `<div class="big">${when}</div>
-      <div class="meta">${relDay(next.date)}${next.title?" — "+esc(next.title):""}</div>${absentHtml(next.date)}`;
+    const meta = [next.time?"ora "+next.time:"", next.title?esc(next.title):""].filter(Boolean).join(", ");
+    const ab = absentOn(next.date);
+    box.innerHTML = `<div class="hero">
+      <div class="hero-top"><span>Următoarea repetiție</span><span class="hero-rel">${relDay(next.date)}</span></div>
+      <div class="hero-date">${WEEKDAYS[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]}</div>
+      ${meta?`<div class="hero-meta">${meta}</div>`:""}
+      ${ab.length
+        ? `<div class="hero-abs">${ab.map(u=>bulina(u)).join("")}<span>nu ${ab.length===1?"poate":"pot"}: ${ab.map(firstName).join(", ")}</span></div>`
+        : `<div class="hero-abs ok">Nimeni n-a anunțat că lipsește</div>`}
+    </div>`;
   } else {
-    box.innerHTML = `<div class="none">Nicio repetiție programată. Programeaz-o din tabul Calendarul tău.</div>`;
+    box.innerHTML = `<div class="hero empty">
+      <div class="hero-top"><span>Următoarea repetiție</span></div>
+      <p>Nicio repetiție programată.</p>
+      <button class="btn ghost" data-goto="cal">Programează una</button>
+    </div>`;
   }
   // legenda membrilor
   $("#legendHome").innerHTML = ORDER.map(u=>
@@ -780,17 +722,8 @@ function renderHome(){
   $("#homeGrid").innerHTML = monthGrid(homeMonth, false);
   // ce urmează
   const up = events.filter(e=>e.date>=t).slice(0,8);
-  $("#homeEvents").innerHTML = up.length ? up.map(e=>evRow(e,false,true)).join("")
+  $("#homeEvents").innerHTML = up.length ? up.map(e=>evRow(e,false)).join("")
     : `<div class="empty-state">Nimic programat momentan.</div>`;
-  // repertoriu pe scurt
-  const act = songs.filter(s=>!s.archived);
-  const ready = act.filter(s=>ORDER.every(u=>(s.canPlay||{})[u]==="Da")).length;
-  const noVote = act.filter(s=>!(s.votes||{})[me]).length;
-  $("#homeSongs").innerHTML = act.length
-    ? `<li><b>${act.length}</b> ${act.length===1?"piesă":"piese"} în repertoriu</li>
-       <li><b>${ready}</b> pe care le poate cânta toată trupa</li>
-       <li><b>${noVote}</b> la care tu încă n-ai votat</li>`
-    : `<li>Nicio piesă în repertoriu încă.</li>`;
 }
 
 /* ---------- CALENDARUL TĂU ---------- */
@@ -800,18 +733,17 @@ function renderCalendar(){
   const t = todayYmd();
   const n = (availability[me]||[]).filter(d=>d>=t).length;
   $("#calCount").textContent = n
-    ? `De azi încolo ai marcat ${cate(n,"zi","zile")} în care nu poți.`
-    : "De azi încolo n-ai marcat nicio zi. Trupa înțelege că poți oricând.";
+    ? `Ai marcat ${cate(n,"zi","zile")} de azi încolo. Trupa le vede în Panou trupă.`
+    : "N-ai marcat nicio zi. Trupa înțelege că poți oricând.";
   const list = events.filter(e=>e.date>=t);
-  $("#calEvents").innerHTML = list.length
-    ? `<div class="hint" style="margin:8px 0 0">Programate:</div>` + list.map(e=>evRow(e,true,false)).join("")
-    : "";
+  $("#calEventsBlock").style.display = list.length ? "" : "none";
+  $("#calEvents").innerHTML = list.map(e=>evRow(e,true)).join("");
   renderEvWarn();
 }
 function renderEvWarn(){
   const ds=$("#evDate").value; const ab=ds?absentOn(ds):[];
   $("#evWarn").innerHTML = ab.length
-    ? `În ziua aceasta nu pot: ${ab.map(u=>bulina(u)).join("")} <span>${ab.map(firstName).join(", ")}</span>` : "";
+    ? `${ab.map(u=>bulina(u)).join("")}<span>${ab.map(firstName).join(", ")} nu ${ab.length===1?"poate":"pot"} în ziua aceasta</span>` : "";
 }
 
 /* personal=true → doar zilele mele, apăsabile; false → toată trupa, doar de citit */
@@ -840,7 +772,7 @@ function monthGrid(month, personal){
       if(past){
         html+=`<div class="${cls.join(" ")}">${inner}</div>`;
       } else {
-        const lbl = `${d} ${MONTHS[m]}: ${mine?"marcat nu pot — apasă ca să eliberezi":"liber — apasă ca să marchezi nu pot"}`;
+        const lbl = `${d} ${MONTHS[m]}: ${mine?"marcat nu pot, apasă ca să eliberezi":"liber, apasă ca să marchezi nu pot"}`;
         html+=`<button type="button" class="${cls.join(" ")}" data-date="${ds}" aria-pressed="${mine}" aria-label="${lbl}">${inner}</button>`;
       }
     } else {
@@ -852,15 +784,16 @@ function monthGrid(month, personal){
   return html;
 }
 
-function evRow(e, withDel, withAbsent){
+function evRow(e, withDel){
   const d=parseYmd(e.date);
   const isC=e.type==="concert";
   const sub = [WEEKDAYS[d.getDay()], e.time, e.title?esc(e.title):""].filter(Boolean).join(", ");
-  const ab = withAbsent && absentOn(e.date).length ? absentHtml(e.date) : "";
+  const ab = withDel ? [] : absentOn(e.date);
   return `<div class="ev ${isC?"con":"rep"}">
     <div class="date"><div class="d">${d.getDate()}</div><div class="m">${MONTHS_SHORT[d.getMonth()]}</div></div>
-    <div class="info"><div class="t">${isC?"Concert":"Repetiție"}</div><div class="s">${sub}</div>${ab}</div>
-    ${withDel?`<button class="del" data-del="${e.id}">șterge</button>`:""}
+    <div class="info"><div class="t">${isC?"Concert":"Repetiție"}</div><div class="s">${sub}</div></div>
+    ${ab.length?`<div class="lipsa" aria-label="Nu pot: ${ab.map(firstName).join(", ")}">${ab.map(u=>bulina(u, MEMBERS[u].name+" nu poate")).join("")}</div>`:""}
+    ${withDel?`<button class="text-btn" data-del="${esc(e.id)}">Șterge</button>`:""}
   </div>`;
 }
 
@@ -868,103 +801,52 @@ function evRow(e, withDel, withAbsent){
 function renderSongs(){
   const act = songs.filter(s=>!s.archived), arch = songs.filter(s=>s.archived);
   const list = $("#songsList");
-  $("#archToggle").textContent = showArchive ? "Înapoi la repertoriu" : `Vezi arhiva (${arch.length})`;
+  $("#archToggle").textContent = showArchive ? "Înapoi la piese" : `Arhivă (${arch.length})`;
   $("#openAddSong").style.display = showArchive ? "none" : "";
+  $(".toolbar").style.gridTemplateColumns = showArchive ? "1fr" : "";
+  $("#archToggle").style.width = showArchive ? "100%" : "";
   if(showArchive){
     $("#songsHead").textContent = "Arhivă";
-    $("#songsSub").textContent = "Piese scoase din repertoriu. Nimic nu se șterge: structura, versurile și linkul rămân aici și pot fi refolosite.";
-    list.innerHTML = arch.length ? arch.map(archivedCard).join("")
-      : `<div class="empty-state">Arhiva e goală. Piesele arhivate din repertoriu apar aici.</div>`;
+    $("#songsCount").textContent = arch.length || "";
+    list.innerHTML = arch.length ? arch.map(s=>songCard(s,true)).join("")
+      : `<div class="empty-state">Arhiva e goală. Piesele arhivate apar aici, cu tot ce conțin.</div>`;
   } else {
     $("#songsHead").textContent = "Piese";
-    $("#songsSub").textContent = act.length
-      ? `${cate(act.length,"piesă","piese")} în repertoriu. Votează, treci ce ai studiat și deschide versurile sau structura.`
-      : "";
-    list.innerHTML = act.length ? act.map(songCard).join("")
-      : `<div class="empty-state">Nicio piesă în repertoriu. Apasă „Adaugă o piesă”.</div>`;
+    $("#songsCount").textContent = act.length || "";
+    list.innerHTML = act.length ? act.map(s=>songCard(s,false)).join("")
+      : `<div class="empty-state">Nicio piesă încă. Apasă „Adaugă o piesă”.</div>`;
   }
 }
 
-function opts(list, val){
-  return list.map(([v,l])=>`<option value="${v}"${v===(val||"")?" selected":""}>${l}</option>`).join("");
-}
-function structureHtml(st){
-  return `<div class="structura" aria-label="Structură">`+
-    st.map((p,i)=>`<span class="pas">`+(i?`<span class="sag" aria-hidden="true">›</span>`:"")+`<span class="parte ${partClass(p)}">${esc(p)}</span></span>`).join("")+
-  `</div>`;
-}
-function songHead(s){
-  const bpm = s.bpm ? `<span class="bpm">${esc(s.bpm)} BPM</span>` : "";
-  return `<h3 class="song-title">${esc(s.title)}</h3>
-    <div class="song-artist">${esc(s.artist)}</div>
-    <div class="song-meta">${bpm}<span>adăugată de ${esc(s.addedBy||"—")}</span></div>`;
-}
-
-function songCard(s){
-  const up=Object.values(s.votes||{}).filter(v=>v==="up").length;
-  const down=Object.values(s.votes||{}).filter(v=>v==="down").length;
-  const studN=Object.values(s.studied||{}).filter(v=>v==="Da").length;
-  const playN=Object.values(s.canPlay||{}).filter(v=>v==="Da").length;
+function songCard(s, archived){
   const href=safeHref(s.link);
   const st=Array.isArray(s.structure)?s.structure:[];
-  const roster = ORDER.map(u=>{
-    const v=(s.votes&&s.votes[u])||""; const sd=(s.studied&&s.studied[u])==="Da"; const pl=(s.canPlay&&s.canPlay[u])==="Da";
-    const vtxt = v==="up"?'<span class="st up">👍</span>':v==="down"?'<span class="st down">👎</span>':'<span class="st">–</span>';
-    return `<div class="rrow">
-      <div class="nm">${bulina(u)}${esc(firstName(u))}</div>
-      ${vtxt}
-      <span class="st ${sd?'yes':''}">${sd?'✓':'–'}</span>
-      <span class="st ${pl?'yes':''}">${pl?'✓':'–'}</span>
-    </div>`;
-  }).join("");
-
-  return `<article class="card song" data-song="${esc(s.id)}">
+  const structura = st.length
+    ? `<div class="structura" aria-label="Structură">${st.map(p=>`<span class="parte ${partClass(p)}">${esc(p)}</span>`).join("")}</div>` : "";
+  const asculta = href ? `<a class="chip-btn" href="${esc(href)}" target="_blank" rel="noopener">${ICON_PLAY}Ascultă</a>` : "";
+  const versuri = s.lyrics ? `<button class="chip-btn" data-act="lyrics">Versuri</button>`
+    : archived ? "" : `<button class="chip-btn gol" data-act="lyrics">+ Versuri</button>`;
+  let arhInfo = "";
+  if(archived){
+    const d = s.archivedAt ? new Date(s.archivedAt) : null;
+    arhInfo = `<div class="arh-info">Arhivată${s.archivedBy?" de "+esc(s.archivedBy):""}${d?`, ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`:""}</div>`;
+  }
+  return `<article class="song${archived?" arhivata":""}" data-song="${esc(s.id)}">
     <div class="song-top">
-      <div>${songHead(s)}</div>
-      <div class="tally"><span class="tchip">👍 ${up}</span><span class="tchip">👎 ${down}</span></div>
+      <div>
+        <h3>${esc(s.title)}</h3>
+        ${s.artist?`<div class="artist">${esc(s.artist)}</div>`:""}
+      </div>
+      ${s.bpm?`<span class="bpm">${esc(s.bpm)} BPM</span>`:""}
     </div>
-    <div class="media">
-      ${href?`<a class="pill-link" href="${esc(href)}" target="_blank" rel="noopener">Ascultă piesa</a>`
-            :`<button class="pill-link gol" data-act="edit">Adaugă link audio</button>`}
-      <button class="pill-link ${s.lyrics?"":"gol"}" data-act="lyrics">${s.lyrics?"Versuri":"Adaugă versuri"}</button>
-      ${st.length?"":`<button class="pill-link gol" data-act="edit">Adaugă structura</button>`}
+    ${structura}${arhInfo}
+    <div class="song-actions">
+      ${asculta}${versuri}
+      <span class="spatiu"></span>
+      ${archived
+        ? `<button class="text-btn" data-act="restore" style="color:var(--yellow)">Readu în piese</button>`
+        : `<button class="text-btn" data-act="edit">Editează</button>`}
     </div>
-    ${st.length?structureHtml(st):""}
-    <div class="ctrls">
-      <div class="ctrl"><label>Votul tău</label>
-        <select data-f="votes">${opts([["","— alege —"],["up","👍 O facem"],["down","👎 N-o facem"]], (s.votes||{})[me])}</select></div>
-      <div class="ctrl"><label>Ai studiat-o</label>
-        <select data-f="studied">${opts([["","—"],["Da","Da"],["Nu","Nu"]], (s.studied||{})[me])}</select></div>
-      <div class="ctrl"><label>O poți cânta</label>
-        <select data-f="canPlay">${opts([["","—"],["Da","Da"],["Nu","Nu"]], (s.canPlay||{})[me])}</select></div>
-      <div class="ctrl band"><label>Track-uri (trupă)</label>
-        <select data-f="tracks">${opts([["Nu","Nu"],["Da","Da"]], s.tracks||"Nu")}</select></div>
-    </div>
-    <details class="band"${openBand.has(s.id)?" open":""}>
-      <summary>Toată trupa: 👍 ${up}, 👎 ${down}, studiat ${studN}/5, pot cânta ${playN}/5</summary>
-      <div class="roster-head"><span>Membru</span><span>Vot</span><span>Studiat</span><span>Cântă</span></div>
-      <div class="roster">${roster}</div>
-    </details>
-    <div class="song-foot">
-      <button class="link-btn" data-act="edit">Editează piesa</button>
-      <button class="link-btn" data-act="archive">Arhivează</button>
-    </div>
-  </article>`;
-}
-
-function archivedCard(s){
-  const href=safeHref(s.link);
-  const st=Array.isArray(s.structure)?s.structure:[];
-  const when = s.archivedAt ? (()=>{ const d=new Date(s.archivedAt); return ` pe ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`; })() : "";
-  return `<article class="card song arhivata" data-song="${esc(s.id)}">
-    <div class="song-top"><div>${songHead(s)}</div></div>
-    <div class="arh-info" style="margin-top:6px">Arhivată${s.archivedBy?" de "+esc(s.archivedBy):""}${when}</div>
-    <div class="media">
-      ${href?`<a class="pill-link" href="${esc(href)}" target="_blank" rel="noopener">Ascultă piesa</a>`:""}
-      ${s.lyrics?`<button class="pill-link" data-act="lyrics">Versuri</button>`:""}
-    </div>
-    ${st.length?structureHtml(st):""}
-    <button class="btn ghost" data-act="restore" style="margin-top:14px">Readu în repertoriu</button>
   </article>`;
 }
 
@@ -980,12 +862,12 @@ function palette(){
 function openSongDlg(s){
   editId = s ? s.id : null;
   $("#songDlgTitle").textContent = s ? "Editează piesa" : "Adaugă o piesă";
-  $("#saveSongBtn").textContent = s ? "Salvează modificările" : "Salvează piesa";
   $("#sTitle").value = s?s.title||"":"";
   $("#sArtist").value = s?s.artist||"":"";
   $("#sBpm").value = s&&s.bpm?s.bpm:"";
   $("#sLink").value = s?s.link||"":"";
   $("#partCustom").value = ""; $("#songErr").textContent="";
+  $("#archRow").style.display = s ? "" : "none";
   draft = s && Array.isArray(s.structure) ? [...s.structure] : [];
   selIdx = -1;
   $("#partPalette").innerHTML = palette().map(p=>`<button type="button" data-part="${esc(p)}">${esc(p)}</button>`).join("");
@@ -994,8 +876,8 @@ function openSongDlg(s){
 }
 function renderSeq(){
   $("#partSeq").innerHTML = draft.length
-    ? draft.map((p,i)=>`<button type="button" class="parte ${partClass(p)}${i===selIdx?" sel":""}" data-i="${i}" aria-pressed="${i===selIdx}"><span class="nr">${i+1}</span>${esc(p)}</button>`).join("")
-    : `<span class="gol">Nicio parte încă. Alege din lista de mai jos.</span>`;
+    ? draft.map((p,i)=>`<button type="button" class="parte ${partClass(p)}${i===selIdx?" sel":""}" data-i="${i}" aria-pressed="${i===selIdx}">${esc(p)}</button>`).join("")
+    : `<span class="gol">Goală. Alege părțile de mai jos.</span>`;
   const has = selIdx>=0 && selIdx<draft.length;
   $("#seqLeft").disabled = !has || selIdx===0;
   $("#seqRight").disabled = !has || selIdx===draft.length-1;
@@ -1012,43 +894,41 @@ async function saveSong(){
   const title=$("#sTitle").value.trim(), artist=$("#sArtist").value.trim();
   const bpmRaw=$("#sBpm").value.trim(), link=normalizeUrl($("#sLink").value);
   const errEl=$("#songErr"); errEl.textContent="";
-  if(!title || !artist){ errEl.textContent="Completează piesa și artistul."; return; }
+  if(!title){ errEl.textContent="Scrie numele piesei."; $("#sTitle").focus(); return; }
   let bpm=null;
   if(bpmRaw){
     bpm=Math.round(Number(bpmRaw));
     if(!Number.isFinite(bpm) || bpm<30 || bpm>300){ errEl.textContent="BPM trebuie să fie un număr între 30 și 300."; return; }
   }
   if(link===null){ errEl.textContent="Linkul nu pare valid. Lipește adresa completă, de tipul https://…"; return; }
-  const btn=$("#saveSongBtn"); const old=btn.textContent; btn.disabled=true; btn.textContent="Se salvează…";
+  const btn=$("#saveSongBtn"); btn.disabled=true;
   const data={ title, artist, bpm, link, structure:[...draft] };
   try{
     if(editId){
       await updateDoc(doc(db,"songs",editId), data);
-      toast("Piesă salvată ✓");
+      toast("Piesă salvată");
     } else {
       await addDoc(collection(db,"songs"),{ ...data, lyrics:"", archived:false,
-        tracks:"Nu", votes:{}, studied:{}, canPlay:{},
         addedBy: firstName(me), createdAt: Date.now() });
-      toast("Piesă adăugată ✓");
+      toast("Piesă adăugată");
     }
     $("#songDlg").close();
   }catch(e){
     errEl.textContent="Nu s-a salvat: "+(e.code||e.message);
-  }finally{ btn.disabled=false; btn.textContent=old; }
+  }finally{ btn.disabled=false; }
 }
 
 /* ---------- arhivare (în loc de ștergere) ---------- */
 async function archiveSong(s){
   try{
     await updateDoc(doc(db,"songs",s.id), { archived:true, archivedBy:firstName(me), archivedAt:Date.now() });
-    openBand.delete(s.id);
-    toast(`„${s.title}” e în arhivă. O poți readuce oricând.`);
+    toast("Mutată în arhivă");
   }catch(e){ toast("Nu s-a arhivat: "+(e.code||e.message)); }
 }
 async function restoreSong(s){
   try{
     await updateDoc(doc(db,"songs",s.id), { archived:false, archivedBy:deleteField(), archivedAt:deleteField() });
-    toast(`„${s.title}” e din nou în repertoriu ✓`);
+    toast("Readusă în piese");
   }catch(e){ toast("Nu s-a readus: "+(e.code||e.message)); }
 }
 
@@ -1061,7 +941,7 @@ function lyricsMode(edit){
 }
 function openLyrics(s){
   lyricsId = s.id;
-  $("#lyricsTitle").textContent = "Versuri: "+s.title;
+  $("#lyricsTitle").textContent = s.title;
   $("#lyricsView").textContent = s.lyrics||"";
   $("#lyricsMeta").textContent = s.lyricsBy ? "Ultima modificare: "+s.lyricsBy : "";
   $("#lyricsText").value = s.lyrics||"";
@@ -1073,7 +953,7 @@ async function saveLyrics(){
   const btn=$("#lyricsSaveBtn"); btn.disabled=true;
   try{
     await updateDoc(doc(db,"songs",lyricsId), { lyrics:text, lyricsBy:firstName(me), lyricsAt:Date.now() });
-    toast(text?"Versuri salvate ✓":"Versuri golite");
+    toast(text?"Versuri salvate":"Versuri golite");
     $("#lyricsDlg").close();
   }catch(e){ toast("Nu s-au salvat: "+(e.code||e.message)); }
   finally{ btn.disabled=false; }
@@ -1082,16 +962,6 @@ async function saveLyrics(){
 /* ============================================================
    ACTIONS
    ============================================================ */
-async function setMapField(id, field, value){
-  const key = field+"."+me;
-  try{ await updateDoc(doc(db,"songs",id), { [key]: value==="" ? deleteField() : value }); }
-  catch(e){ toast("Eroare: "+(e.code||e.message)); }
-}
-async function setTracks(id, value){
-  try{ await updateDoc(doc(db,"songs",id), { tracks:value }); }
-  catch(e){ toast("Eroare: "+(e.code||e.message)); }
-}
-
 async function toggleBusy(ds){
   const have = (availability[me]||[]).includes(ds);
   try{
@@ -1101,7 +971,7 @@ async function toggleBusy(ds){
 }
 
 async function addEvent(){
-  const type=$("#evType").value, date=$("#evDate").value,
+  const type=document.querySelector("input[name=evType]:checked").value, date=$("#evDate").value,
         time=$("#evTime").value, title=$("#evTitle").value.trim();
   const errEl=$("#evErr"); errEl.textContent="";
   if(!date){ errEl.textContent="Alege o dată."; return; }
@@ -1109,7 +979,7 @@ async function addEvent(){
     await addDoc(collection(db,"events"),{ type, date, time, title,
       createdBy: firstName(me), createdAt: Date.now() });
     $("#evTime").value=$("#evTitle").value="";
-    toast(type==="concert"?"Concert adăugat ✓":"Repetiție adăugată ✓");
+    toast(type==="concert"?"Concert adăugat":"Repetiție adăugată");
   }catch(e){ errEl.textContent="Eroare: "+(e.code||e.message); }
 }
 async function deleteEvent(id){
@@ -1127,7 +997,7 @@ function wireEvents(){
   $("#logoutBtn").addEventListener("click", ()=>{ localStorage.removeItem("band_user"); me=null; showLogin(); });
 
   document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click", ()=>switchView(b.dataset.view)));
-  document.querySelectorAll("[data-goto]").forEach(b=>b.addEventListener("click", ()=>switchView(b.dataset.goto)));
+  $("#appView").addEventListener("click", e=>{ const b=e.target.closest("[data-goto]"); if(b) switchView(b.dataset.goto); });
 
   $("#homePrev").addEventListener("click",()=>{ homeMonth.setMonth(homeMonth.getMonth()-1); renderHome(); });
   $("#homeNext").addEventListener("click",()=>{ homeMonth.setMonth(homeMonth.getMonth()+1); renderHome(); });
@@ -1145,27 +1015,15 @@ function wireEvents(){
   $("#evDate").value = todayYmd();
   $("#evDate").addEventListener("change", renderEvWarn);
 
-  // piese: toate acțiunile de pe carduri
-  const list=$("#songsList");
-  list.addEventListener("click", e=>{
+  // piese: acțiunile de pe carduri
+  $("#songsList").addEventListener("click", e=>{
     const b=e.target.closest("[data-act]"); if(!b) return;
     const s=songs.find(x=>x.id===b.closest("[data-song]").dataset.song); if(!s) return;
     const act=b.dataset.act;
     if(act==="edit") openSongDlg(s);
     else if(act==="lyrics") openLyrics(s);
-    else if(act==="archive") archiveSong(s);
     else if(act==="restore") restoreSong(s);
   });
-  list.addEventListener("change", e=>{
-    const sel=e.target.closest("select[data-f]"); if(!sel) return;
-    const id=sel.closest("[data-song]").dataset.song;
-    if(sel.dataset.f==="tracks") setTracks(id, sel.value); else setMapField(id, sel.dataset.f, sel.value);
-  });
-  list.addEventListener("toggle", e=>{
-    const d=e.target; if(!d.matches || !d.matches("details.band")) return;
-    const id=d.closest("[data-song]").dataset.song;
-    if(d.open) openBand.add(id); else openBand.delete(id);
-  }, true);
   $("#openAddSong").addEventListener("click", ()=>openSongDlg(null));
   $("#archToggle").addEventListener("click", ()=>{ showArchive=!showArchive; renderSongs(); window.scrollTo({top:0}); });
 
@@ -1183,6 +1041,10 @@ function wireEvents(){
   $("#partCustomAdd").addEventListener("click", addCustom);
   $("#partCustom").addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); addCustom(); } });
   $("#saveSongBtn").addEventListener("click", saveSong);
+  $("#archFromDlg").addEventListener("click", async ()=>{
+    const s=songs.find(x=>x.id===editId); if(!s) return;
+    await archiveSong(s); $("#songDlg").close();
+  });
 
   // fereastra de versuri
   $("#lyricsEditBtn").addEventListener("click", ()=>{ lyricsMode(true); $("#lyricsText").focus(); });
