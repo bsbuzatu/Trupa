@@ -195,6 +195,11 @@
   .parte{font-size:13px;font-weight:600;padding:4px 9px;border-radius:8px;background:rgba(255,255,255,.08);color:var(--text);white-space:nowrap}
   .parte.refren{background:var(--yellow);color:var(--ink)}
   .parte.solo{background:transparent;box-shadow:inset 0 0 0 1.5px var(--orange);color:var(--orange)}
+  .parte .mz{font-weight:800;margin-left:6px;opacity:.72;font-variant-numeric:tabular-nums}
+  .control:disabled{opacity:.55;cursor:not-allowed}
+  .masura-info{font-size:12.5px;color:var(--muted);margin-top:8px}
+  .masura-lock{font-size:13.5px;color:var(--muted);background:rgba(255,255,255,.06);border-radius:12px;padding:10px 12px;line-height:1.4}
+  .masura-lock b{color:var(--yellow)}
   .song-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
   .song-actions .spatiu{flex:1}
   .chip-btn{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600;
@@ -420,6 +425,12 @@
         <input id="sLink" class="control" type="url" inputmode="url" placeholder="YouTube, Spotify, Drive…">
       </div>
     </div>
+    <div id="masuraLock" class="masura-lock" style="display:none">
+      <div class="fld-label">Structură</div>
+      <div class="structura" id="masuraLockSeq" style="margin:0 0 10px"></div>
+      Titlul, BPM-ul și structura vin din aplicația <b>Măsura</b> și se modifică doar acolo. Aici poți schimba artistul și linkul.
+    </div>
+    <div id="structEdit" style="display:contents">
     <div>
       <div class="fld-label">Structură</div>
       <div class="seq" id="partSeq"></div>
@@ -438,6 +449,7 @@
     <div class="row-inline">
       <input id="partCustom" class="control" placeholder="Altă parte…" maxlength="40" aria-label="Altă parte">
       <button type="button" class="btn ghost" id="partCustomAdd">Adaugă</button>
+    </div>
     </div>
     <div class="err" id="songErr" role="alert"></div>
     <div class="arh-row" id="archRow">
@@ -581,6 +593,19 @@ function normalizeUrl(raw){
   catch(e){ return null; }
 }
 function safeHref(s){ return /^https?:\/\//i.test(s||"") ? s : ""; }
+/* numărul de măsuri al unei părți (vine din aplicația Măsura); null = parte deschisă */
+function barsOf(s,i){ return Array.isArray(s.structureBars) && i<s.structureBars.length ? s.structureBars[i] : undefined; }
+function barsTag(s,i){
+  const b=barsOf(s,i);
+  if(b===undefined) return "";
+  return b===null ? `<span class="mz" title="durată liberă">∞</span>` : `<span class="mz" title="${b} măsuri">${esc(b)}</span>`;
+}
+function masuraSummary(s){
+  const bars=(Array.isArray(s.structureBars)?s.structureBars:[]);
+  const total=bars.reduce((a,b)=>a+(typeof b==="number"?b:0),0);
+  const open=bars.filter(b=>b===null).length;
+  return `Din Măsura · ${total} ${total===1?"măsură":"măsuri"}${open?` + ${open===1?"o parte deschisă":open+" părți deschise"}`:""}`;
+}
 function partClass(p){
   const k=(p||"").toLowerCase();
   if(k.startsWith("refren")) return "refren";
@@ -822,7 +847,8 @@ function songCard(s, archived){
   const href=safeHref(s.link);
   const st=Array.isArray(s.structure)?s.structure:[];
   const structura = st.length
-    ? `<div class="structura" aria-label="Structură">${st.map(p=>`<span class="parte ${partClass(p)}">${esc(p)}</span>`).join("")}</div>` : "";
+    ? `<div class="structura" aria-label="Structură">${st.map((p,i)=>`<span class="parte ${partClass(p)}">${esc(p)}${barsTag(s,i)}</span>`).join("")}</div>` : "";
+  const masInfo = s.masuraId ? `<div class="masura-info">${masuraSummary(s)}</div>` : "";
   const asculta = href ? `<a class="chip-btn" href="${esc(href)}" target="_blank" rel="noopener">${ICON_PLAY}Ascultă</a>` : "";
   const versuri = s.lyrics ? `<button class="chip-btn" data-act="lyrics">Versuri</button>`
     : archived ? "" : `<button class="chip-btn gol" data-act="lyrics">+ Versuri</button>`;
@@ -837,9 +863,9 @@ function songCard(s, archived){
         <h3>${esc(s.title)}</h3>
         ${s.artist?`<div class="artist">${esc(s.artist)}</div>`:""}
       </div>
-      ${s.bpm?`<span class="bpm">${esc(s.bpm)} BPM</span>`:""}
+      ${s.bpm||s.timeSig?`<span class="bpm">${[s.bpm?esc(s.bpm)+" BPM":"", s.timeSig?esc(s.timeSig):""].filter(Boolean).join(" · ")}</span>`:""}
     </div>
-    ${structura}${arhInfo}
+    ${structura}${masInfo}${arhInfo}
     <div class="song-actions">
       ${asculta}${versuri}
       <span class="spatiu"></span>
@@ -868,6 +894,12 @@ function openSongDlg(s){
   $("#sLink").value = s?s.link||"":"";
   $("#partCustom").value = ""; $("#songErr").textContent="";
   $("#archRow").style.display = s ? "" : "none";
+  // piesele venite din Măsura: titlul, BPM-ul și structura se schimbă doar din Măsura
+  const fromMasura = !!(s && s.masuraId);
+  $("#sTitle").disabled = fromMasura; $("#sBpm").disabled = fromMasura;
+  $("#structEdit").style.display = fromMasura ? "none" : "";
+  $("#masuraLock").style.display = fromMasura ? "" : "none";
+  if(fromMasura) $("#masuraLockSeq").innerHTML = (s.structure||[]).map((p,i)=>`<span class="parte ${partClass(p)}">${esc(p)}${barsTag(s,i)}</span>`).join("");
   draft = s && Array.isArray(s.structure) ? [...s.structure] : [];
   selIdx = -1;
   $("#partPalette").innerHTML = palette().map(p=>`<button type="button" data-part="${esc(p)}">${esc(p)}</button>`).join("");
@@ -902,13 +934,16 @@ async function saveSong(){
   }
   if(link===null){ errEl.textContent="Linkul nu pare valid. Lipește adresa completă, de tipul https://…"; return; }
   const btn=$("#saveSongBtn"); btn.disabled=true;
-  const data={ title, artist, bpm, link, structure:[...draft] };
+  const cur = editId ? songs.find(x=>x.id===editId) : null;
+  // la piesele din Măsura salvăm doar ce nu vine din Măsura (artist, link)
+  const data = cur && cur.masuraId ? { artist, link } : { title, artist, bpm, link, structure:[...draft], structureBars:deleteField() };
   try{
     if(editId){
       await updateDoc(doc(db,"songs",editId), data);
       toast("Piesă salvată");
     } else {
-      await addDoc(collection(db,"songs"),{ ...data, lyrics:"", archived:false,
+      const { structureBars, ...fresh } = data;
+      await addDoc(collection(db,"songs"),{ ...fresh, lyrics:"", archived:false,
         addedBy: firstName(me), createdAt: Date.now() });
       toast("Piesă adăugată");
     }
