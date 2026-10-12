@@ -863,7 +863,7 @@ function songCard(s, archived){
         <h3>${esc(s.title)}</h3>
         ${s.artist?`<div class="artist">${esc(s.artist)}</div>`:""}
       </div>
-      ${s.bpm||s.timeSig?`<span class="bpm">${[s.bpm?esc(s.bpm)+" BPM":"", s.timeSig?esc(s.timeSig):""].filter(Boolean).join(" · ")}</span>`:""}
+      ${s.key||s.bpm||s.timeSig?`<span class="bpm">${[s.key?esc(s.key):"", s.bpm?esc(s.bpm)+" BPM":"", s.timeSig?esc(s.timeSig):""].filter(Boolean).join(" · ")}</span>`:""}
     </div>
     ${structura}${masInfo}${arhInfo}
     <div class="song-actions">
