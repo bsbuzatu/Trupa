@@ -198,6 +198,11 @@
   .parte .mz{font-weight:800;margin-left:6px;opacity:.72;font-variant-numeric:tabular-nums}
   .control:disabled{opacity:.55;cursor:not-allowed}
   .masura-info{font-size:12.5px;color:var(--muted);margin-top:8px}
+  .grup-h{display:flex;align-items:center;gap:10px;margin:6px 0 2px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .grup-h.concert{color:var(--yellow)}
+  .grup-h .nr{font-size:12px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted);background:rgba(255,255,255,.08);border-radius:999px;padding:2px 9px}
+  .grup-h + .song{margin-top:4px}
+  .song .ord{display:inline-grid;place-items:center;min-width:26px;height:26px;border-radius:8px;background:var(--yellow);color:var(--ink);font-weight:800;font-size:13px;margin-right:10px;vertical-align:middle;font-variant-numeric:tabular-nums}
   .masura-lock{font-size:13.5px;color:var(--muted);background:rgba(255,255,255,.06);border-radius:12px;padding:10px 12px;line-height:1.4}
   .masura-lock b{color:var(--yellow)}
   .song-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px}
@@ -838,7 +843,17 @@ function renderSongs(){
   } else {
     $("#songsHead").textContent = "Piese";
     $("#songsCount").textContent = act.length || "";
-    list.innerHTML = act.length ? act.map(s=>songCard(s,false)).join("")
+    // Ordinea vine din Măsura: piesele din concertul activ (masuraOrder 1, 2, 3…) primele, apoi restul, în ordinea adăugării
+    const inConcert = act.filter(s=>typeof s.masuraOrder==="number").sort((a,b)=>a.masuraOrder-b.masuraOrder);
+    const rest = act.filter(s=>typeof s.masuraOrder!=="number");
+    const concertName = (inConcert.find(s=>s.masuraConcert)||{}).masuraConcert || "Concert";
+    let html = "";
+    if(inConcert.length){
+      html += `<div class="grup-h concert">Concert: ${esc(concertName)}<span class="nr">${inConcert.length}</span></div>` + inConcert.map(s=>songCard(s,false)).join("");
+      if(rest.length) html += `<div class="grup-h" style="margin-top:22px">Restul pieselor<span class="nr">${rest.length}</span></div>`;
+    }
+    html += rest.map(s=>songCard(s,false)).join("");
+    list.innerHTML = act.length ? html
       : `<div class="empty-state">Nicio piesă încă. Apasă „Adaugă o piesă”.</div>`;
   }
 }
@@ -860,7 +875,7 @@ function songCard(s, archived){
   return `<article class="song${archived?" arhivata":""}" data-song="${esc(s.id)}">
     <div class="song-top">
       <div>
-        <h3>${esc(s.title)}</h3>
+        <h3>${!archived&&typeof s.masuraOrder==="number"?`<span class="ord">${s.masuraOrder}</span>`:""}${esc(s.title)}</h3>
         ${s.artist?`<div class="artist">${esc(s.artist)}</div>`:""}
       </div>
       ${s.key||s.bpm||s.timeSig?`<span class="bpm">${[s.key?esc(s.key):"", s.bpm?esc(s.bpm)+" BPM":"", s.timeSig?esc(s.timeSig):""].filter(Boolean).join(" · ")}</span>`:""}
